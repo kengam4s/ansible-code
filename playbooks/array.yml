@@ -1,0 +1,31 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+   become: true
+   vars:
+     myfiles: ['/opt/file1.txt', '/opt/file2.txt', '/opt/file3.txt']
+     mydir: ['webapp-1', 'webapp-2']
+
+# TASK SECTION
+   tasks:
+     - name: To ensure 3 files are present in the remote machine
+       file:
+         path: "{{ item }}"
+         state: file
+         mode: 0600
+       loop: "{{ myfiles }}"
+       ignore_errors: yes
+
+     - name: To create 2 directories
+       file:
+         path: /opt/{{ item }}
+         state: directory
+         mode: 0644
+         recurse: yes
+         owner: root
+         group: root
+       loop: "{{ mydir }}"
+
+# Learn Ignore errors
+#       ignore_errors: yes

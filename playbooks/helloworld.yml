@@ -1,0 +1,17 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This play will create a file
+   hosts: all
+   become: true
+
+# TASK SECTION
+   tasks:
+     - name: Creating a diectory called ansible
+       file:
+         path: /opt/ansible1
+         state: directory
+         owner: root
+         group: root
+         mode: 0755
